@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedFormat = result.selectedFormat || predefinedFormats[0].value;
         renderRadioButtons();
         updateTime();
+        // Update time every second, but only after we have the format
+        setInterval(updateTime, 1000);
     });
 
     function renderRadioButtons() {
@@ -91,9 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("Failed to copy:", e);
         }
     }
-
-    // Update time every second
-    setInterval(updateTime, 1000);
 
     // Event Listeners
     copyButton.addEventListener('click', handleCopy);
