@@ -1,6 +1,3 @@
-// CopyMyDate - Chrome Extension
-// Version 2.0.0
-
 // 30+ Common Date Formats
 const DATE_FORMATS = [
     { label: "MM/dd/yyyy", value: "MM/dd/yyyy", example: "10/26/2025" },
@@ -37,13 +34,7 @@ const DATE_FORMATS = [
     { label: "dd/MM/yyyy hh:mm a", value: "dd/MM/yyyy hh:mm a", example: "26/10/2025 02:30 PM" },
 ];
 
-/**
- * Custom date formatting function
- * Formats a date object according to the specified format string
- * @param {Date} date - The date to format
- * @param {string} formatStr - The format string
- * @returns {string} - The formatted date string
- */
+// Simple date formatting function
 function formatDate(date, formatStr) {
     const pad = (num) => String(num).padStart(2, '0');
     
@@ -85,9 +76,7 @@ function formatDate(date, formatStr) {
     return result;
 }
 
-// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    // Get DOM elements
     const formattedTimeEl = document.getElementById('formatted-time');
     const copyButton = document.getElementById('copy-button');
     const copyButtonText = document.getElementById('copy-button-text');
@@ -96,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkIcon = document.getElementById('check-icon');
     const searchInput = document.getElementById('search-input');
 
-    // State variables
     let currentTime = new Date();
     let selectedFormat = '';
     let isCopied = false;
@@ -111,10 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
         startTimer();
     });
 
-    /**
-     * Render radio buttons for format selection
-     * @param {string} searchTerm - Optional search term to filter formats
-     */
     function renderRadioButtons(searchTerm = '') {
         radioGroup.innerHTML = '';
         
@@ -166,9 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /**
-     * Update the displayed time with current date/time
-     */
     function updateTime() {
         currentTime = new Date();
         try {
@@ -178,17 +159,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    /**
-     * Start the timer to update time every second
-     */
     function startTimer() {
         updateInterval = setInterval(updateTime, 1000);
     }
 
-    /**
-     * Handle copy button click
-     * Copies the formatted date to clipboard
-     */
     function handleCopy() {
         if (isCopied) return;
         
@@ -221,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderRadioButtons(e.target.value);
     });
 
-    // Keyboard shortcut listener (Ctrl+Shift+C or Cmd+Shift+C)
+    // Keyboard shortcut listener
     document.addEventListener('keydown', (event) => {
         if ((event.metaKey || event.ctrlKey) && event.shiftKey && event.key.toLowerCase() === 'c') {
             event.preventDefault();
@@ -229,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Listen for extension command (from manifest)
+    // Listen for extension command
     if (chrome.commands) {
         chrome.commands.onCommand.addListener((command) => {
             if (command === "copy-date") {
